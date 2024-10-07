@@ -7,6 +7,6 @@ Aplikasi resep makanan indonesia.
 ## Screenshot
 ![gambar 1](./readme/splash.png)
 ![gambar 2](./readme/home.png)
-![gambar 3](./readme/search.png.png)
+![gambar 3](./readme/search.png)
 ![gambar 4](./readme/resep.png)
-![gambar ](./readme/artikel.png.png)
+![gambar ](./readme/artikel.png)
