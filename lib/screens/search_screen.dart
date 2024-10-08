@@ -59,7 +59,6 @@ class _SearchScreenState extends State<SearchScreen> {
                           setState(() {
                             inputan = searchInput.text;
                             cari = true;
-                            print(cari);
                           });
                         },
                         child: Icon(

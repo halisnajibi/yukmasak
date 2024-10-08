@@ -1,32 +1,22 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:masakyuk/service/kategori_api.dart';
 
 import '../globals.dart';
 import '../model/kategori.dart';
-import 'package:http/http.dart' as http;
 
 class Kategori extends StatelessWidget {
-  const Kategori({
+  Kategori({
     super.key,
   });
-
-  Future<List<KategoriModel>> _getKategori() async {
-    final response = await http.get(
-        Uri.parse("https://resep-hari-ini.vercel.app/api/category/recipes"));
-    final jsonData = jsonDecode(response.body)['results'] as List<dynamic>;
-    return jsonData
-        .map((json) => KategoriModel.fromJson(json as Map<String, dynamic>))
-        .toList();
-  }
+  final kategori = KategoriApi();
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: FutureBuilder<List<KategoriModel>>(
-          future: _getKategori(),
+          future: kategori.fetchKategori(),
           initialData: [],
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {

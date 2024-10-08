@@ -46,7 +46,7 @@ class _MyBottomNavigationState extends State<MyBottomNavigation> {
               index = 2;
             });
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const ArticleScreen()));
+                MaterialPageRoute(builder: (context) => ArticleScreen()));
           }
         },
         items: [

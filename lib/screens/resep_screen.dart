@@ -1,17 +1,15 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:masakyuk/service/resep_api.dart';
 import 'package:masakyuk/widgets/bottom_navigation.dart';
 
 import '../globals.dart';
 import '../model/resep.dart';
-import 'package:http/http.dart' as http;
-
 import 'search_screen.dart';
 
 class ResepScreen extends StatelessWidget {
   final keyData;
+  final serviceResep = ResepApi();
   ResepScreen({super.key, required this.keyData});
   @override
   Widget build(BuildContext context) {
@@ -33,8 +31,8 @@ class ResepScreen extends StatelessWidget {
       body: Stack(
         children: [
           FutureBuilder<ResepModel>(
-              future: DetailResep(keyData: keyData)
-                  .getData(), // Panggil getData di sini
+              future: serviceResep
+                  .fetchDetailResep(keyData), // Panggil getData di sini
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
@@ -81,21 +79,15 @@ class ResepScreen extends StatelessWidget {
 
 class DetailResep extends StatelessWidget {
   final keyData;
+  final serviceResep = ResepApi();
   DetailResep({super.key, required this.keyData});
-
-  Future<ResepModel> getData() async {
-    final response = await http.get(
-        Uri.parse("https://resep-hari-ini.vercel.app/api/recipe/$keyData"));
-    final jsonData = jsonDecode(response.body)['results'];
-    return ResepModel.fromJson(jsonData);
-  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 24, right: 24, top: 35),
       child: FutureBuilder<ResepModel>(
-          future: getData(),
+          future: serviceResep.fetchDetailResep(keyData),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(

@@ -3,28 +3,22 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:masakyuk/model/resep.dart';
+import 'package:masakyuk/service/resep_api.dart';
 
 import '../globals.dart';
-import 'package:http/http.dart' as http;
 
 class PopulerResep extends StatelessWidget {
-  const PopulerResep({
+  PopulerResep({
     super.key,
   });
-
-  Future<List<ResepModel>> getData() async {
-    final response = await http.get(Uri.parse(
-        "https://resep-hari-ini.vercel.app/api/recipes-length/?limit=5"));
-    final jsonData = jsonDecode(response.body)['results'] as List<dynamic>;
-    return jsonData.map((json) => ResepModel.fromJson(json)).toList();
-  }
+  final serviceResep = ResepApi();
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: FutureBuilder<List<ResepModel>>(
-          future: getData(),
+          future: serviceResep.fetchFavResep(),
           initialData: [],
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {

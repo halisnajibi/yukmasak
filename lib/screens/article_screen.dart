@@ -3,13 +3,15 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:masakyuk/globals.dart';
+import 'package:masakyuk/service/artikel_api.dart';
 
 import '../model/artikel.dart';
 import '../widgets/bottom_navigation.dart';
 import 'package:http/http.dart' as http;
 
 class ArticleScreen extends StatelessWidget {
-  const ArticleScreen({super.key});
+  ArticleScreen({super.key});
+  final serviceArtikel = ArtikelApi();
   Future<List<ArtikelModel>> getData() async {
     final response = await http
         .get(Uri.parse("https://resep-hari-ini.vercel.app/api/articles/new"));
@@ -33,7 +35,7 @@ class ArticleScreen extends StatelessWidget {
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: FutureBuilder<List<ArtikelModel>>(
-              future: getData(),
+              future: serviceArtikel.fecthArtikel(),
               initialData: [],
               builder: (context, snapshot) {
                 if (snapshot.hasError) {

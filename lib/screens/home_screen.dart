@@ -48,7 +48,7 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 12,
               ),
-              const Kategori(),
+              Kategori(),
               const SizedBox(
                 height: 24,
               ),
@@ -72,7 +72,7 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(
                 height: 12,
               ),
-              const PopulerResep(),
+              PopulerResep(),
               SizedBox(
                 height: 10,
               ),

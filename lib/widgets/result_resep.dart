@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:masakyuk/model/resep.dart';
+import 'package:masakyuk/service/resep_api.dart';
 
 import '../globals.dart';
-import 'package:http/http.dart' as http;
-
 import '../screens/resep_screen.dart';
 
 class ResultResep extends StatelessWidget {
@@ -26,18 +23,13 @@ class ResultResep extends StatelessWidget {
 // ignore: must_be_immutable
 class CardResep extends StatelessWidget {
   String input;
+  final serviceResep = ResepApi();
   CardResep({super.key, required this.input});
-  Future<List<ResepModel>> getResep() async {
-    final response = await http.get(
-        Uri.parse("https://resep-hari-ini.vercel.app/api/search?q=${input}"));
-    final jsonData = jsonDecode(response.body)['results'] as List<dynamic>;
-    return jsonData.map((json) => ResepModel.fromJson(json)).toList();
-  }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<ResepModel>>(
-        future: getResep(),
+        future: serviceResep.fectSearchResep(input),
         initialData: [],
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
